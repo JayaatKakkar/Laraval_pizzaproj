@@ -2,13 +2,18 @@
 
 @section('maincontent')
 <div class="container">
-
+@if(session()->has('success'))
+    <div class="alert alert-success">
+        {{ session()->get('success') }}
+    </div>
+@endif
     <div class="row">
         <div class="col-sm-12 text-center">
             <h3>Category Creation</h3>
         </div>
     </div>
-    <form action="">
+    <form action="/category" method="POST">
+    @csrf
     <div class="row">
         <div class="col-sm-6 mt-2">
             <div class="form-group">
@@ -49,13 +54,13 @@
                 <div class="col-sm-4">Available</div>
                 <div class="col-sm-4">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="rdbtn1" name="rdbtn" value="option1">
+                        <input class="form-check-input" type="checkbox" id="rdbtn1" name="rdbtn" value="1">
                         <label class="form-check-label" for="rdbtn1">YES</label>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-check form-check-inline float-left">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="0">
                         <label class="form-check-label" for="inlineCheckbox2">NO</label>
                     </div>
                 </div>
@@ -64,10 +69,7 @@
                 
             </div>
         <div class="col-sm-6 mt-2">
-            <div class="form-group">
-                <label for="exampleInputUsername1">Username</label>
-                <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Username">
-            </div>
+           <button type="submit" name="subm" id="subm" class="btn btn-outline-primary">Submit</button>
         </div>
     </div>
     
