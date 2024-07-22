@@ -16,8 +16,9 @@
     <link rel="stylesheet" href="assets/vendors/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <!-- endinject -->
+    <!-- Datatable CSS -->
+     <link rel="stylesheet" href="DataTables/datatables.css">
+     <link rel="stylesheet" href="DataTables/datatables.min.css">
     <!-- Layout styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- End layout styles -->
@@ -364,6 +365,13 @@
     <!-- Custom js for this page -->
     <script src="assets/js/dashboard.js"></script>
     <!-- endinject -->
+    <script
+  src="https://code.jquery.com/jquery-3.7.1.js"
+  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"></script>
+  <script src="DataTables/datatables.min.js"></script>
+  <script src="DataTables/datatables.js"></script>
+  <script src="jquery.js"></script>
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
   </body>

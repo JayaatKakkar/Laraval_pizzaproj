@@ -27,6 +27,9 @@
                 <select class="form-select" id="parent" name="parent" required>
                     <option>None</option>
                     <option value="0">Parent</option>
+                    @foreach($parentCategories as $parentCategory)
+                <option value="{{ $parentCategory->id }}">{{ $parentCategory->category_name }}</option>
+            @endforeach
                 </select>
             </div>
         </div>
@@ -74,5 +77,21 @@
     </div>
     
     </form>
-</div>   
+</div>  
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 mt-2">
+            <table id="categorytab" class="table table-responsive w-100 table-striped table-hover nowrap">
+                <thead>
+                    <th>S. No.</th>
+                    <th>Category Name</th>
+                    <th>Parent Category</th>
+                    <th>Sub-Category</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div> 
 @endsection
