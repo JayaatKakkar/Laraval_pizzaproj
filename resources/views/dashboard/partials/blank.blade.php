@@ -4,6 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Ecommerce Laravel</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
@@ -25,6 +26,37 @@
     <link rel="shortcut icon" href="assets/images/favicon.png" />
   </head>
   <body>
+    <style>
+      div.dt-buttons>.dt-button{
+        background: linear-gradient(to bottom, rgb(251 170 170 / 50%) 0%, rgb(247 247 247 / 0%) 100%) !important;
+      }
+      .bg-grey{
+        background-color: #F2F3F4 ;
+      }
+
+      #dt-search-0 {
+            padding: 10px; /* Add some padding */
+            border: 2px solid #ffcfcf !important; /* Green border */
+            border-radius: 5px; /* Rounded corners */
+            background-color: #f9f9f9; /* Light grey background */
+            font-size: 14px; /* Increase font size */
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2); /* Add shadow for depth */
+            outline: none; /* Remove default outline */
+            transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+        }
+
+        /* Style for focus state */
+        #dt-search-0:focus {
+            border-color: #2E7D32; /* Darker green border on focus */
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.3); /* More pronounced shadow */
+        }
+
+        /* Style for the placeholder text */
+        #dt-search-0::placeholder {
+            color: #888; /* Grey color for placeholder */
+            font-style: italic; /* Italic font style */
+        }
+    </style>
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">

@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Categorymodal extends Model
 {
+    use HasFactory;
     protected $table="categories";
-    // use HasFactory;
+    protected $guarded=[];
+
+    public $timestamp=false;
+    
 }

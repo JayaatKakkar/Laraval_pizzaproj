@@ -87,7 +87,7 @@ class CategoryController extends Controller
             ->skip($start)
             ->take($length)
             ->get();
-
+// print_r($data);
             $arr1 = [];
             $id = 1;
 
@@ -96,14 +96,50 @@ class CategoryController extends Controller
                 $arraylist[] = $id;
                 $arraylist[] = $row->category_name;
                 $arraylist[] = $row->desc;
-                $arraylist[] = $row->parent_cat;
-                $arraylist[] = $row->sub_cat;
+                $arraylist[] = is_null($row->parent_cat)?"NULL":$row->parent_cat;
+                $arraylist[] = is_null($row->sub_cat)?"NULL":$row->sub_cat;
                 $arraylist[] = $row->status;
                 $arraylist[] = '<a href="#" name="updcat" class="pe-1 btn updcat" id="updcat" data-id="'.$row->mid.'"><i class="fa-regular fa-lg fa-pen-to-square" style="color: #000 ;"></i></a><a href="#" name="delcat" id="delcat" data-id="'.$row->mid.'" class="btn delcat"><i class="fa-solid fa-xl fa-trash-can" style="color: #000 ;"></i></a>';
     
                 $arr1[] = $arraylist;
                 $id++;
+                // print_r($arraylist);
             }
+            $response = [
+                "iTotalRecords" => $totalRecords,
+                "iTotalDisplayRecords" => $totalRecords,
+                "data" => $arr1
+            ];
+            return response()->json($response);
+    }
+
+    // ..........Update Category show data............
+    public function viewCategory($id){
+        $data = Categorymodal::find($id);
+        // $parentCategories = Categorymodal::whereNull('parentcat')->get();
+        return response()->json($data);
+        // error_log($data);
+        // return redirect()->back()->with(compact('data', 'parentCategories'));
+    
+    }
+    // .........Update Category function.............
+    public function updateCategory($id){
+        $data=Categorymodal::find($id);
+        $data->category_name=request('catname');
+        $data->desc=request('desc');
+        $data->parentcat=request('parent') !="0"?request('parent'):null;
+        $data->subcat=request('subcategory') !="0"?request('subcategory'):null;
+        $data->status=request('rdbtn');
+        $data->save();
+        return redirect()->back()->with('success', 'Updated successfully');
+        // return response()->json($data);
+    }
+
+    // ..........Delete Category..............
+    public function deleteCategory($id){
+        $data=Categorymodal::find($id);
+        $data->delete();    
+        return response()->json(['message' => 'Deleted successfully'], 200);
     }
 
 }

@@ -1,4 +1,34 @@
+function updatesubshow(pid,sid){
+    console.log(pid,sid);
+    $.ajax({
+        url: "/get-subcategories/"+pid,
+        type: "GET",
+        success:function(data){
+            // console.log(data);
+            var list='<option>Choose Sub</option><option value="0">None</option>';
+            if(data.length!=0){
+                console.log("work");
+                $.each(data,function(index,val){
+                    if (val.id==sid) {
+                        list+='<option value="'+val.id+'" selected>'+val.category_name+'</option>';
+                    }else{
+                         list+='<option value="'+val.id+'">'+val.category_name+'</option>';
+                    }
+                });
+                if (sid === null || sid == 0) {
+                    list = '<option>Choose Sub</option><option value="0" selected>None</option>';
+                    $.each(data, function(index, val) {
+                        list += '<option value="' + val.id + '">' + val.category_name + '</option>';
+                    });
+                }
 
+            }else{
+                list='<option>Choose Sub</option><option value="0" selected>None</option>';
+            }
+            $("#subcategory").html(list);
+        }
+    })
+}
         $(document).ready(function() {
 
             // ..........Sub category Dropdown............
@@ -25,7 +55,11 @@
 
 
             // ............DataTable for Category..............
-
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             var Category= $("#categorytab").DataTable({
 
                 language:{
@@ -48,13 +82,16 @@
                         var api = this.api();
                         var startIndex = api.context[0]._iDisplayStart;
                         var seq = startIndex + index + 1;
-                        $('td:eq(1)', row).html(seq);
+                        $('td:eq(0)', row).html(seq);
                     },
                 "columnDefs": [
                      {
                          "targets": [0],
                          "orderable": false,
                      },
+                     {
+                        width:'20%',targets:2,
+                     }
                     ],
                 "pageLength": 10,
                 dom:  '<"button-container d-md-flex justify-content-md-end"fB>rt<"button-container-footer d-md-flex justify-content-md-between"lpi>',
@@ -106,4 +143,41 @@
                 }  
                 
             });
+
+            $(document).on("click","a#updcat",function(){
+                var id = $(this).data('id');
+                $.ajax({
+                    url: "/category/"+id+"/edit",
+                    type: "GET",
+                    success: function (data) {
+                        console.log(data);
+                        $("#categorycol").collapse('show');
+                        $("#catform").attr("action",'/category/'+data.id);
+                        $("div h3").text("Update Category");
+                        $("#parent").val(data.parentcat==null?0:data.parentcat);
+                        $("#catname").val(data.category_name);
+                        $("#desc").val(data.desc)
+                        updatesubshow(data.parentcat,data.subcat)
+                        if(data.status=='1'){
+                            $("#rdbtn1").prop("checked",true);
+                        }else{
+                            $("#rdbtn2").prop("checked",true);
+                        }
+                    }
+                })
+            });
+
+            $(document).on("click","a#delcat",function(){
+                var id = $(this).data('id');
+                $.ajax({
+                    url: "/category/"+id,
+                    type: "DELETE",
+                    success: function (data) {
+                        console.log(data);
+                        Category.ajax.reload();
+                        if(data.message)
+                        alert("Deleted Successfully")
+                    }
+                })
+            })
         });

@@ -18,3 +18,10 @@ Route::post('/category', [CategoryController::class, 'create']);
 // ............Category View.............
 Route::post("/viewcategory",[CategoryController::class, 'show']);
 
+// ..........Category Update data view..............
+Route::get("/category/{id}/edit",[CategoryController::class, 'viewCategory']);
+
+Route::POST("/category/{id}",[CategoryController::class,'updateCategory']);
+
+// ............Delete Request........................
+Route::delete("/category/{id}",[CategoryController::class,'deleteCategory']);
